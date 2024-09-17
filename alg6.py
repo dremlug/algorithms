@@ -10,8 +10,8 @@ def block_sort(array_size: int, array: list) -> int:
             if array[array_index] > max_number:
                 max_number = array[array_index]
             array_index += 1
-            if array_index == len(array):
-                return count +1
+            if array_index == array_size:
+                return count + 1
         count += 1
         target = max_number + 1
 
