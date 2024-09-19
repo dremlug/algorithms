@@ -24,7 +24,7 @@ def string_decrypt(encrypted_string: str) -> str:
                 index += 1
                 if encrypted_string[index] == '[':
                     count += 1
-                if encrypted_string[index] == ']':
+                elif encrypted_string[index] == ']':
                     count -= 1
             finish_index = index
             decrypted_string += multiplier * string_decrypt(encrypted_string[start_index:finish_index])
@@ -35,8 +35,4 @@ def string_decrypt(encrypted_string: str) -> str:
 
 
 if __name__ == '__main__':
-    # with open('input.txt', 'r') as f:
-    #     result = string_decrypt(f.readline().strip())
-    # with open('output.txt', 'w') as f_out:
-    #     f_out.write(result)
     print(string_decrypt(input()))
