@@ -1,4 +1,4 @@
-# ID 118350048
+# ID 118350308
 import string
 
 
@@ -27,7 +27,8 @@ def string_decrypt(encrypted_string: str) -> str:
                 elif encrypted_string[index] == ']':
                     count -= 1
             finish_index = index
-            decrypted_string += multiplier * string_decrypt(encrypted_string[start_index:finish_index])
+            decrypted_string += multiplier * string_decrypt(
+                encrypted_string[start_index:finish_index])
         else:
             decrypted_string += multiplier * encrypted_string[index]
         index += 1
