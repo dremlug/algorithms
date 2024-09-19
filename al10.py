@@ -35,8 +35,4 @@ def string_decrypt(encrypted_string: str) -> str:
 
 
 if __name__ == '__main__':
-    # with open('input.txt', 'r') as f:
-    #     result = string_decrypt(f.readline().strip())
-    # with open('output.txt', 'w') as f_out:
-    #     f_out.write(result)
     print(string_decrypt(input()))
