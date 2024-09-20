@@ -1,45 +1,42 @@
-# ID 118371866
+# ID 118423710
 import string
 
 
-def string_decrypt(encrypted_string: str) -> str:
-    '''Дешифрование управляющих сообщений Марсохода.
-    Входные данные: encrypted_string - шифровонное сообщение
-    Выходные данные: decrypted_string - дешифрованное сообщение
-    '''
-    #  Если шифрованная строка пустая вернуть также пустую строку
-    if encrypted_string == '':
-        return ''
+def decrypt(encrypted: str) -> str:
+    """Дешифрование управляющих сообщений Марсохода.
+    Входные данные: encrypted - шифровонное сообщение
+    Выходные данные: decrypted - дешифрованное сообщение
+    """
     index = 0
-    decrypted_string = ''
-    while index < len(encrypted_string):
+    multiplier = '1'
+    is_previous_digit = False
+    decrypted = [[1, '']]
+    for char in encrypted:
         # Получение числа-множителя из строки
-        if encrypted_string[index] in string.digits:
-            index_left = index
-            while encrypted_string[index + 1] in string.digits:
-                index += 1
-            multiplier = int(encrypted_string[index_left:index+1])
+        if char in string.digits:
+            if not is_previous_digit:
+                multiplier = char
+            else:
+                multiplier += char
+            is_previous_digit = True
+        # Добавляем подстраку и множетель в стек
+        elif char == '[':
+            decrypted.append([multiplier, ''])
+            is_previous_digit = False
+            multiplier = '1'
             index += 1
+        # Вынимаем подстроку и множетль из стека
+        elif char == ']':
+            is_previous_digit = False
+            index -= 1
+            _multiplier, _string = decrypted.pop()
+            decrypted[index][1] += int(_multiplier) * _string
+        # Добавлем символ с коэффициентом в подстроку
         else:
-            multiplier = 1
-        # Поиск и дешифрование подстрок
-        if encrypted_string[index] == '[':
-            start_index = index + 1
-            count = 1
-            while count > 0:
-                index += 1
-                if encrypted_string[index] == '[':
-                    count += 1
-                elif encrypted_string[index] == ']':
-                    count -= 1
-            finish_index = index
-            decrypted_string += multiplier * string_decrypt(
-                encrypted_string[start_index:finish_index])
-        else:
-            decrypted_string += multiplier * encrypted_string[index]
-        index += 1
-    return decrypted_string
+            is_previous_digit = False
+            decrypted[index][1] += int(multiplier) * char
+    return decrypted[0][1]
 
 
 if __name__ == '__main__':
-    print(string_decrypt(input()))
+    print(decrypt(input()))
