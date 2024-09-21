@@ -9,28 +9,28 @@ def decrypt(encrypted: str) -> str:
     """
     multiplier = ''
     decrypted = []
-    current_decryption = ''
+    current_decrypted = ''
     for char in encrypted:
         # Получение числа-множителя из строки
         if char in string.digits:
                 multiplier += char
                 continue
-        # Добавляем подстраку и множетель в стек
+        # Добавляем подстроку и множитель в стек
         elif char == '[':
-            decrypted.append((multiplier, current_decryption))
-            current_decryption = ''
-        # Вынимаем подстроку и множетель из стека
+            decrypted.append((multiplier, current_decrypted))
+            current_decrypted = ''
+        # Вынимаем подстроку и множитель из стека
         elif char == ']':
             _multiplier, _string = decrypted.pop()
-            current_decryption = _string + int(_multiplier) * current_decryption
+            current_decrypted = _string + int(_multiplier) * current_decrypted
         # Добавлем символ с коэффициентом в подстроку
         else:
             if multiplier != '':
-                current_decryption += int(multiplier) * char
+                current_decrypted += int(multiplier) * char
             else:
-                current_decryption += char
+                current_decrypted += char
         multiplier = ''
-    return current_decryption
+    return current_decrypted
 
 
 if __name__ == '__main__':
