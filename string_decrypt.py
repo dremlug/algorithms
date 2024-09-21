@@ -7,35 +7,30 @@ def decrypt(encrypted: str) -> str:
     Входные данные: encrypted - шифровонное сообщение
     Выходные данные: decrypted - дешифрованное сообщение
     """
-    index = 0
-    multiplier = '1'
-    is_previous_digit = False
-    decrypted = [[1, '']]
+    multiplier = ''
+    decrypted = []
+    current_decryption = ''
     for char in encrypted:
         # Получение числа-множителя из строки
         if char in string.digits:
-            if not is_previous_digit:
-                multiplier = char
-            else:
                 multiplier += char
-            is_previous_digit = True
+                continue
         # Добавляем подстраку и множетель в стек
         elif char == '[':
-            decrypted.append([multiplier, ''])
-            is_previous_digit = False
-            multiplier = '1'
-            index += 1
-        # Вынимаем подстроку и множетль из стека
+            decrypted.append((multiplier, current_decryption))
+            current_decryption = ''
+        # Вынимаем подстроку и множетель из стека
         elif char == ']':
-            is_previous_digit = False
-            index -= 1
             _multiplier, _string = decrypted.pop()
-            decrypted[index][1] += int(_multiplier) * _string
+            current_decryption = _string + int(_multiplier) * current_decryption
         # Добавлем символ с коэффициентом в подстроку
         else:
-            is_previous_digit = False
-            decrypted[index][1] += int(multiplier) * char
-    return decrypted[0][1]
+            if multiplier != '':
+                current_decryption += int(multiplier) * char
+            else:
+                current_decryption += char
+        multiplier = ''
+    return current_decryption
 
 
 if __name__ == '__main__':
