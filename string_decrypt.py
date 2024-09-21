@@ -5,7 +5,7 @@ import string
 def decrypt(encrypted: str) -> str:
     """Дешифрование управляющих сообщений Марсохода.
     Входные данные: encrypted - шифровонное сообщение
-    Выходные данные: decrypted - дешифрованное сообщение
+    Выходные данные: current_decryption - дешифрованное сообщение
     """
     multiplier = ''
     decrypted = []
