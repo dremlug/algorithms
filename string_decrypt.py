@@ -1,4 +1,4 @@
-# ID 118490491
+# ID 118492204
 import string
 
 
@@ -10,22 +10,22 @@ def decrypt(encrypted: str) -> str:
     multiplier = decrypted = ''
     _stack = []
     for char in encrypted:
-        # Получение числа-множителя из строки
-        if char in string.digits:
-            multiplier += char
-        # Добавляем подстроку и множитель в стек
-        elif char == '[':
-            _stack.append((int(multiplier), decrypted))
-            decrypted = ''
-            multiplier = ''
-        # Вынимаем подстроку и множитель из стека
-        elif char == ']':
-            _multiplier, _decrypted = _stack.pop()
-            decrypted = _decrypted + _multiplier * decrypted
-        # Добавлем символ с коэффициентом в подстроку
-        else:
-            decrypted += char
-
+        match char:
+            # Получение числа-множителя из строки
+            case _ if char in string.digits:
+                multiplier += char
+            # Добавляем подстроку и множитель в стек
+            case '[':
+                _stack.append((int(multiplier), decrypted))
+                decrypted = ''
+                multiplier = ''
+            # Вынимаем подстроку и множитель из стека
+            case ']':
+                _multiplier, _decrypted = _stack.pop()
+                decrypted = _decrypted + _multiplier * decrypted
+            # Добавлем символ с коэффициентом в подстроку
+            case _:
+                decrypted += char
     return decrypted
 
 
