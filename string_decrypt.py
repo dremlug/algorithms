@@ -8,7 +8,7 @@ def decrypt(encrypted: str) -> str:
     Выходные данные: decrypted - дешифрованное сообщение
     """
     multiplier = decrypted = ''
-    _stack = []
+    stack = []
     for char in encrypted:
         match char:
             # Получение числа-множителя из строки
@@ -16,12 +16,11 @@ def decrypt(encrypted: str) -> str:
                 multiplier += char
             # Добавляем подстроку и множитель в стек
             case '[':
-                _stack.append((int(multiplier), decrypted))
-                decrypted = ''
-                multiplier = ''
+                stack.append((int(multiplier), decrypted))
+                decrypted = multiplier = ''
             # Вынимаем подстроку и множитель из стека
             case ']':
-                _multiplier, _decrypted = _stack.pop()
+                _multiplier, _decrypted = stack.pop()
                 decrypted = _decrypted + _multiplier * decrypted
             # Добавлем символ с коэффициентом в подстроку
             case _:
